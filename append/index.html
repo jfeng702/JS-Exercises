@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+  </head>
+  <body>
+
+    <div id="target">
+
+    </div>
+    <script>
+      const exampleArr = ['div', 'p', 'nav'];
+      const targett = document.getElementById('target');
+
+      const append = (arr, target) => {
+        let current = targett;
+        let newElement;
+        for (let i = 0; i < arr.length; i++) {
+          newElement = document.createElement(arr[i]);
+          current.appendChild(newElement);
+          current = newElement;
+        }
+        current.innerHTML = 'done';
+      };
+      append(exampleArr, targett);
+
+    </script>
+
+  </body>
+</html>
