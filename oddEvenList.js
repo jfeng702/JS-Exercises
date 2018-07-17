@@ -14,15 +14,21 @@ var oddEvenList = function(head) {
     return null;
   }
 
-  let odd = head, even = head.next, evenHead = even;
+  let odd = head;
+  let even = head.next;
+  let evenHead = head.next;
+  let oddHead = head;
+
   while (even && even.next) {
     odd.next = even.next;
     odd = odd.next;
     even.next = odd.next;
     even = even.next;
   }
+
   odd.next = evenHead;
-  return head;
+  return oddHead;
+
 };
 // var oddEvenList = function(head) {
 //   let i = 0;
