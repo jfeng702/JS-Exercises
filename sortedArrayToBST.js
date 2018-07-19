@@ -6,19 +6,31 @@ class TreeNode {
   }
 }
 
-const sortedArrayToBST = (arr) => {
-  if (arr.length === 0) {
-    return null;
+class BST {
+  sortedArrayToBST(arr) {
+    if (arr.length === 0) {
+      return null;
+    }
+
+    let mid = Math.floor(arr.length / 2);
+    let node = new TreeNode(arr[mid]);
+
+    node.left = this.sortedArrayToBST(arr.slice(0, mid));
+    node.right = this.sortedArrayToBST(arr.slice(mid + 1));
+    return node;
+
   }
 
-  let mid = Math.floor(arr.length / 2);
-  let node = new TreeNode(arr[mid]);
+  preorder(root) {
+    if (root === null) {
+      return null;
+    }
+    console.log(root.val);
+    this.preorder(root.left);
+    this.preorder(root.right);
+  }
 
-  node.left = sortedArrayToBST(arr.slice(0, mid));
-  node.right = sortedArrayToBST(arr.slice(mid + 1));
-  return node;
-
-};
+}
 
 // const sortedArrayToBST = (arr, start = 0, end = arr.length - 1) => {
 //   if (start > end) {
@@ -41,4 +53,6 @@ const sortedArrayToBST = (arr) => {
 
 
 const arr = [-10,-3,0,5,9];
-console.log(sortedArrayToBST(arr));
+let tree = new BST;
+let node = tree.sortedArrayToBST(arr);
+tree.preorder(node);
