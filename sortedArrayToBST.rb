@@ -2,7 +2,7 @@
 
 
 class TreeNode
-  attr_accessor :left, :right, :val
+  attr_accessor :left, :right
   def initialize(val)
     @val = val
     @left = @right = nil
@@ -23,14 +23,7 @@ class BST
     node
   end
 
-  def preorder(root)
-    if root.nil?
-      return nil
-    end
-    p root.val
-    preorder(root.left)
-    preorder(root.right)
-  end
+  def in
 end
 
 # node = TreeNode.new(1)
@@ -43,8 +36,4 @@ end
 #
 
 arr = [-10,-3,0,5,9]
-# p BST.new.sorted_array_to_bst(arr)
-tree = BST.new
-node = tree.sorted_array_to_bst(arr)
-# p node
-tree.preorder(node)
+p sorted_array_to_bst(arr)
