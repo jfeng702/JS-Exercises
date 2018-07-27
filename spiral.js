@@ -13,6 +13,9 @@ const coolerMatrix = [
   [13,14,15,16]
 ];
 
+const aMatrix = [
+  [1,2]
+];
 // desired output:
 // [1,2,3,6,9,8,7,4,5,6]
 
@@ -46,4 +49,5 @@ const spiral = matrix => {
 };
 
 // spiral(coolMatrix);
-spiral(coolerMatrix);
+// spiral(coolerMatrix);
+spiral(aMatrix);
