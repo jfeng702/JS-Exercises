@@ -1,15 +1,3 @@
-function levelOrder(root) {
-  if (!root) {
-    return null;
-  }
-
-  console.log(root.data);
-  levelOrder(root.left);
-  levelOrder(root.right);
-}
-
-
-
 class Node {
   constructor(data) {
     this.data = data;
@@ -24,9 +12,9 @@ class BinaryTree {
   }
 
   printLevelOrder() {
-    let h = this.height(root);
+    let h = this.height(this.root);
     for(let i = 1; i <= h; i++) {
-      this.printGivenLevel(root, i);
+      this.printGivenLevel(this.root, i);
     }
   }
 
