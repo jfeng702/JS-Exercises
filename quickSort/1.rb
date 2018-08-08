@@ -34,6 +34,9 @@ def kth_smallest(arr, k, left = 0, right = arr.length - 1)
   end
 end
 
+# O(n**2) worst case, but O(n) on average
+# worst case is n calls, and doing a n linear scan each time
+# average is halving the array each time, so becomes 1 + 1/2 + 1/4 + 1/8 ... => 1 + 1 => 2n
 def kth_largest(arr, k, left = 0, right = arr.length - 1)
   if k > 0 && k <= right - left + 1
     pivot = partition(arr, left, right)
