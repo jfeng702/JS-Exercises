@@ -11,15 +11,16 @@ end
 # A => B => C => D => E
 # given C, return A => B => D => E
 
-# O(n)
+# O(constant)
 def delete_mid(mid_node)
-  while mid_node && mid_node.next
-    mid_node.val = mid_node.next.val
-    prev = mid_node
-    mid_node = mid_node.next
+  if mid_node.nil? || mid_node.next.nil?
+    return false
   end
-  prev.next = nil
+  mid_node.val = mid_node.next.val
+  mid_node.next = mid_node.next.next
+  true
 end
+
 
 head = Node.new(1)
 head.next = Node.new(2)
