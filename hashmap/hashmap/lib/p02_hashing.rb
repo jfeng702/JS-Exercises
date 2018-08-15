@@ -6,7 +6,7 @@ class Array
   def hash
     count = 0
     self.each_with_index do |e,i|
-      count += (e.ord * i)
+      count += (e.hash * i)
     end
     count
   end

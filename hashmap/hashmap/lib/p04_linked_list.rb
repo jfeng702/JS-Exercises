@@ -20,6 +20,10 @@ end
 
 class LinkedList
   def initialize
+    @head = Node.new
+    @tail = Node.new
+    @head.next = @tail
+    @tail.prev = @head
   end
 
   def [](i)
@@ -28,27 +32,58 @@ class LinkedList
   end
 
   def first
+    @head.next
   end
 
   def last
+    @tail.prev
   end
 
   def empty?
+    @head.next == @tail
   end
 
   def get(key)
+    head = first
+    while head
+      return head.val if head.key == key
+      head = head.next
+    end
   end
 
   def include?(key)
   end
 
   def append(key, val)
+    node = Node.new(key,val)
+    prev = @tail.prev
+    prev.next = node
+    node.prev = prev
+    node.next = @tail
+    @tail.prev = node
   end
 
   def update(key, val)
+    head = @head
+    while head
+      if head.key == key
+        head.val = val
+      end
+      head = head.next
+    end
   end
 
   def remove(key)
+    head = first
+    while head
+      if head.key == key
+        p head
+        p head.prev
+        head.prev.next = head.next
+        head.next.prev = head.prev
+      end
+      head = head.next
+    end
   end
 
   def each
