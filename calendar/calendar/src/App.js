@@ -29,29 +29,30 @@ class App extends Component {
     // check month
     if (date.slice(0,2) < currentDate.slice(0,2) ) {
       isValid = false;
-      errors['date'] = 'month has to be in the future';
+      errors['date'] = 'Date has to be in the future';
     } else if (date.slice(0,2) === currentDate.slice(0,2)) {
       // check date
       if (date.slice(3,5) < currentDate.slice(3,5) + 1) {
         isValid = false;
-        errors['date'] = 'date has to be in the future';
+        errors['date'] = 'Date has to be in the future';
       }
     }
     // time/date cannot conflict with existing appts
     if (apts[date]) {
       let requestedTimes = [];
-      for (let i = Number(start); i <= Number(end); i++) {
+      for (let i = Number(start); i < Number(end); i++) {
         requestedTimes.push(i);
       }
       for (let time of requestedTimes) {
         if (apts[date] && apts[date].includes(time)) {
           isValid = false;
-          errors['time'] = 'time conflict';
+          errors['time'] = 'Time conflict';
         }
       }
     }
 
     console.log(errors);
+    this.setState({errors})
     return isValid;
   }
 
@@ -84,7 +85,7 @@ class App extends Component {
 
     if (this.handleValidation()) {
       let requestedTimes = [];
-      for (let i = Number(start); i <= Number(end); i++) {
+      for (let i = Number(start); i < Number(end); i++) {
         requestedTimes.push(i);
       }
       let priorTimes;
@@ -111,21 +112,25 @@ class App extends Component {
 
   render() {
     return (
-      <form onSubmit={this.handleSubmit}>
-        <label>
-          Enter a date in the form mm/dd
-          <input type="text" className="date" value={this.state.date} onChange={this.handleDate} />
-        </label>
-        <label>
-          Start Time:
-          <input type="text" className="start" value={this.state.start} onChange={this.handleStart} />
-        </label>
-        <label>
-          End Time:
-          <input type="text" className="end" value={this.state.end} onChange={this.handleEnd} />
-        </label>
-        <input type="submit" value="submit"/>
-      </form>
+      <div className="container">
+        <form onSubmit={this.handleSubmit} className="form">
+          <label>
+            Enter a date in the form mm/dd
+            <input type="text" className="date" value={this.state.date} onChange={this.handleDate} />
+            <span style={{color: 'red'}}>{this.state.errors['date']}</span>
+          </label>
+          <label>
+            Start Time: (+12 for pm)
+            <input type="text" className="start" value={this.state.start} onChange={this.handleStart} />
+          </label>
+          <label>
+            End Time: (+12 for pm)
+            <input type="text" className="end" value={this.state.end} onChange={this.handleEnd} />
+            <span style={{color: 'red'}}>{this.state.errors['time']}</span>
+          </label>
+          <input type="submit" value="submit"/>
+        </form>
+      </div>
     );
   }
 }
