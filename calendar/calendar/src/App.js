@@ -24,7 +24,10 @@ class App extends Component {
     let isValid = true;
     let errors = {};
     const { date, currentDate, start, end, apts } = this.state;
-
+    if (date === '' || start === '' || end === '') {
+      isValid = false;
+      errors['form'] = 'Please fill out all fields'
+    }
     // date has to be in future
     // check month
     if (date.slice(0,2) < currentDate.slice(0,2) ) {
@@ -104,32 +107,34 @@ class App extends Component {
           ]
         }
       }), () => console.log(this.state));
-
-    } else {
-      alert('errors');
+      alert('appointment scheduled')
     }
   }
 
   render() {
     return (
-      <div className="container">
-        <form onSubmit={this.handleSubmit} className="form">
-          <label>
-            Enter a date in the form mm/dd
-            <input type="text" className="date" value={this.state.date} onChange={this.handleDate} />
-            <span style={{color: 'red'}}>{this.state.errors['date']}</span>
-          </label>
-          <label>
-            Start Time: (+12 for pm)
-            <input type="text" className="start" value={this.state.start} onChange={this.handleStart} />
-          </label>
-          <label>
-            End Time: (+12 for pm)
-            <input type="text" className="end" value={this.state.end} onChange={this.handleEnd} />
-            <span style={{color: 'red'}}>{this.state.errors['time']}</span>
-          </label>
-          <input type="submit" value="submit"/>
-        </form>
+      <div className="outer">
+        <h1>Schedule an Appointment</h1>
+        <div className="container">
+          <form onSubmit={this.handleSubmit} className="form">
+            <label>
+              Enter a date in the form mm/dd:
+              <input type="text" className="date" value={this.state.date} onChange={this.handleDate} />
+              <h5 style={{color: 'red'}}>{this.state.errors['date']}</h5>
+            </label>
+            <label>
+              Start Time (+12 for pm):
+              <input type="text" className="start" value={this.state.start} onChange={this.handleStart} />
+              <h5 style={{color: 'red'}}>{this.state.errors['form']}</h5>
+            </label>
+            <label>
+              End Time (+12 for pm):
+              <input type="text" className="end" value={this.state.end} onChange={this.handleEnd} />
+              <h5 style={{color: 'red'}}>{this.state.errors['time']}</h5>
+            </label>
+            <input type="submit" value="submit" className="submit"/>
+          </form>
+        </div>
       </div>
     );
   }

@@ -2,21 +2,40 @@ body {
   margin: 0;
   padding: 0;
   font-family: sans-serif;
+  background: #bdc3c7;  /* fallback for old browsers */
+  background: -webkit-linear-gradient(to right, #2c3e50, #bdc3c7);  /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to right, #2c3e50, #bdc3c7); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
+}
+
+.outer {
+  text-align: center;
 }
 
 .container {
-  background-color: yellow;
-  height: 250px;
+  background-color: #E0E0E0;
+  /* height: 200px; */
   width: 500px;
+  padding: 20px;
+  margin: 0 auto;
+  position: relative;
 }
+
 
 .form {
   display: flex;
   flex-direction: column;
 }
 
+.submit {
+  width: 50px;
+  border-radius: 10px;
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+}
+
 label {
-  margin: 15px;
 }
 
 input {
