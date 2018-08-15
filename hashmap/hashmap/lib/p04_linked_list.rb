@@ -52,6 +52,14 @@ class LinkedList
   end
 
   def include?(key)
+    head = first
+    while head
+      if head.key == key
+        return true
+      end
+      head = head.next
+    end
+    false
   end
 
   def append(key, val)
