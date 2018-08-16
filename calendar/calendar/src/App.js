@@ -6,7 +6,7 @@ class App extends Component {
     this.state = {
       start: '',
       end: '',
-      date: '08/16',
+      date: '',
       currentDate: this.getDate(),
       apts: {
         '08/15': [8,9]
@@ -53,8 +53,6 @@ class App extends Component {
         }
       }
     }
-
-    console.log(errors);
     this.setState({errors})
     return isValid;
   }
