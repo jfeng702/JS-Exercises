@@ -11,6 +11,8 @@ class App extends Component {
       apts: {
         '08/15': [8,9]
       },
+      startAMPM: 'am',
+      endAMPM: 'am',
       errors: {}
     };
 
@@ -18,6 +20,9 @@ class App extends Component {
     this.handleEnd = this.handleEnd.bind(this);
     this.handleDate = this.handleDate.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleStartAMPM = this.handleStartAMPM.bind(this);
+    this.handleEndAMPM = this.handleEndAMPM.bind(this);
+    this.requestedTimes = this.requestedTimes.bind(this);
   }
 
   handleValidation() {
@@ -30,6 +35,7 @@ class App extends Component {
     }
     // date has to be in future
     // check month
+
     if (date.slice(0,2) < currentDate.slice(0,2) ) {
       isValid = false;
       errors['date'] = 'Date has to be in the future';
@@ -41,11 +47,10 @@ class App extends Component {
       }
     }
     // time/date cannot conflict with existing appts
+    // break out into validateConficts and call it in this one
+    // single responsibility principle
     if (apts[date]) {
-      let requestedTimes = [];
-      for (let i = Number(start); i < Number(end); i++) {
-        requestedTimes.push(i);
-      }
+      let requestedTimes = this.requestedTimes();
       for (let time of requestedTimes) {
         if (apts[date] && apts[date].includes(time)) {
           isValid = false;
@@ -78,17 +83,42 @@ class App extends Component {
     this.setState({date: e.target.value});
   }
 
+  handleStartAMPM(e) {
+    this.setState({startAMPM: e.target.value})
+  }
+
+  handleEndAMPM(e) {
+    this.setState({endAMPM: e.target.value})
+  }
+
+  timeConvert(startOrEnd) {
+    if (startOrEnd === 'start' && this.state.startAMPM === 'pm') {
+      return Number(this.state.start) + 12;
+    }
+    if (startOrEnd === 'end' && this.state.endAMPM === 'pm') {
+      return Number(this.state.end) + 12;
+    }
+    return (startOrEnd === 'start' ? Number(this.state.start) :
+      Number(this.state.end));
+  }
+
+  requestedTimes() {
+    let requestedTimes = [];
+    let convertedStart = this.timeConvert('start');
+    let convertedEnd = this.timeConvert('end');
+    for (let i = convertedStart; i < convertedEnd; i++) {
+      requestedTimes.push(i);
+    }
+    return requestedTimes;
+  }
 
   handleSubmit(e) {
     e.preventDefault();
-    const { date, start, end, apts } = this.state;
+    const { date, start, end, apts} = this.state;
     // let apts = Object.assign({},this.state.apts);
 
     if (this.handleValidation()) {
-      let requestedTimes = [];
-      for (let i = Number(start); i < Number(end); i++) {
-        requestedTimes.push(i);
-      }
+      let requestedTimes = this.requestedTimes();
       let priorTimes;
       if (apts[date]) {
         priorTimes = apts[date];
@@ -110,6 +140,18 @@ class App extends Component {
   }
 
   render() {
+    // bonus : display booked appointments
+    // implement half hour increments **
+    // can say time must be on the hour
+    // submit button needs more padding
+    // style
+    // color wheel
+    // google font font pairings
+    // add header
+    // make basic logo (pexels, or free logos online) doctor logo
+    // give it a theme or a certain feel
+
+    // immediate: allow am or pm selections
     return (
       <div className="outer">
         <h1>Schedule an Appointment</h1>
@@ -117,17 +159,41 @@ class App extends Component {
           <form onSubmit={this.handleSubmit} className="form">
             <label>
               Enter a date in the form mm/dd:
-              <input type="text" className="date" value={this.state.date} onChange={this.handleDate} />
+              <input
+                type="text"
+                className="date"
+                value={this.state.date}
+                onChange={this.handleDate} />
+
               <h5 style={{color: 'red'}}>{this.state.errors['date']}</h5>
             </label>
             <label>
-              Start Time (+12 for pm):
-              <input type="text" className="start" value={this.state.start} onChange={this.handleStart} />
+              Start Time (No Half Hour Intervals Allowed):
+              <input type="text"
+                className="start"
+                value={this.state.start}
+                onChange={this.handleStart} />
+
+              <select
+                onChange={this.handleStartAMPM}
+                value={this.state.startAMPM}>
+                <option value="am">am</option>
+                <option value="pm">pm</option>
+              </select>
               <h5 style={{color: 'red'}}>{this.state.errors['form']}</h5>
             </label>
             <label>
-              End Time (+12 for pm):
-              <input type="text" className="end" value={this.state.end} onChange={this.handleEnd} />
+              End Time (No Half Hour Intervals Allowed):
+              <input type="text"
+                className="end"
+                onChange={this.handleEnd} />
+
+              <select
+                onChange={this.handleEndAMPM}
+                value={this.state.endAMPM}>
+                <option value="am">am</option>
+                <option value="pm">pm</option>
+              </select>
               <h5 style={{color: 'red'}}>{this.state.errors['time']}</h5>
             </label>
             <input type="submit" value="submit" className="submit"/>
