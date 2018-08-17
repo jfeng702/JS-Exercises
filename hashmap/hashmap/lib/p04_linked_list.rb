@@ -1,4 +1,5 @@
 class Node
+
   attr_accessor :key, :val, :next, :prev
 
   def initialize(key = nil, val = nil)
@@ -19,6 +20,7 @@ class Node
 end
 
 class LinkedList
+  include Enumerable
   def initialize
     @head = Node.new
     @tail = Node.new
@@ -49,6 +51,7 @@ class LinkedList
       return head.val if head.key == key
       head = head.next
     end
+    nil
   end
 
   def include?(key)
@@ -85,8 +88,6 @@ class LinkedList
     head = first
     while head
       if head.key == key
-        p head
-        p head.prev
         head.prev.next = head.next
         head.next.prev = head.prev
       end
@@ -95,11 +96,15 @@ class LinkedList
   end
 
   def each
-
+    current_node = @head.next
+    until current_node == @tail
+      yield current_node
+      current_node = current_node.next
+    end
   end
 
   # uncomment when you have `each` working and `Enumerable` included
-  # def to_s
-  #   inject([]) { |acc, node| acc << "[#{node.key}, #{node.val}]" }.join(", ")
-  # end
+  def to_s
+    inject([]) { |acc, node| acc << "[#{node.key}, #{node.val}]" }.join(", ")
+  end
 end

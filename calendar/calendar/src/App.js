@@ -23,6 +23,7 @@ class App extends Component {
     this.handleStartAMPM = this.handleStartAMPM.bind(this);
     this.handleEndAMPM = this.handleEndAMPM.bind(this);
     this.requestedTimes = this.requestedTimes.bind(this);
+    this.validateConflicts = this.validateConflicts.bind(this);
   }
 
   handleValidation() {
@@ -47,21 +48,28 @@ class App extends Component {
       }
     }
     // time/date cannot conflict with existing appts
-    // break out into validateConficts and call it in this one
-    // single responsibility principle
-    if (apts[date]) {
-      let requestedTimes = this.requestedTimes();
-      for (let time of requestedTimes) {
-        if (apts[date] && apts[date].includes(time)) {
-          isValid = false;
-          errors['time'] = 'Time conflict';
-        }
-      }
+    if (!this.validateConflicts()) {
+      isValid = false;
+      errors['time'] = 'Time conflict';
     }
     this.setState({errors})
     return isValid;
   }
 
+// returns true if valid, false for conflicts
+  validateConflicts() {
+    const { apts } = this.state;
+    const requestedDate = this.state.date;
+    if (apts[requestedDate]) {
+      let requestedTimes = this.requestedTimes();
+      for (let time of requestedTimes) {
+        if (apts[requestedDate].includes(time)) {
+          return false;
+        }
+      }
+    }
+    return true;
+  }
 
   getDate() {
     let today = new Date();
@@ -114,7 +122,7 @@ class App extends Component {
 
   handleSubmit(e) {
     e.preventDefault();
-    const { date, start, end, apts} = this.state;
+    const { date, apts} = this.state;
     // let apts = Object.assign({},this.state.apts);
 
     if (this.handleValidation()) {
@@ -134,24 +142,12 @@ class App extends Component {
             ...requestedTimes
           ]
         }
-      }), () => console.log(this.state));
+      }));
       alert('appointment scheduled')
     }
   }
 
   render() {
-    // bonus : display booked appointments
-    // implement half hour increments **
-    // can say time must be on the hour
-    // submit button needs more padding
-    // style
-    // color wheel
-    // google font font pairings
-    // add header
-    // make basic logo (pexels, or free logos online) doctor logo
-    // give it a theme or a certain feel
-
-    // immediate: allow am or pm selections
     return (
       <div className="outer">
         <h1>Schedule an Appointment</h1>
