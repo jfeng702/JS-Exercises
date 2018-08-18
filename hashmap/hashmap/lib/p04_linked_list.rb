@@ -16,11 +16,17 @@ class Node
   def remove
     # optional but useful, connects previous node to next node
     # and removes self from list.
+    self.prev.next = self.next if self.prev
+    self.next.prev = self.prev if self.next
+    self.next = nil
+    self.prev = nil
+    self
   end
 end
 
 class LinkedList
   include Enumerable
+
   def initialize
     @head = Node.new
     @tail = Node.new
