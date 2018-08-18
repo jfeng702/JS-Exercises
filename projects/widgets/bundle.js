@@ -125,6 +125,8 @@ var Clock = function (_React$Component) {
     _this.state = {
       time: new Date()
     };
+
+    _this.tick = _this.tick.bind(_this);
     return _this;
   }
 
@@ -138,28 +140,56 @@ var Clock = function (_React$Component) {
   }, {
     key: 'componentDidMount',
     value: function componentDidMount() {
-      setInterval(this.tick, 1);
+      this.interval = setInterval(this.tick, 1000);
     }
   }, {
-    key: 'componentDidUnmount',
-    value: function componentDidUnmount() {
+    key: 'componentWillUnmount',
+    value: function componentWillUnmount() {
       clearInterval(this.interval);
+      this.interval = 0;
     }
   }, {
     key: 'render',
     value: function render() {
+      var hours = this.state.time.getHours();
+      var minutes = this.state.time.getMinutes();
+      var seconds = this.state.time.getSeconds();
+      hours = hours < 10 ? '0' + hours : hours;
+      minutes = minutes < 10 ? '0' + minutes : minutes;
+      seconds = seconds < 10 ? '0' + seconds : seconds;
+
+      var dateString = this.state.time.toDateString();
+
       return _react2.default.createElement(
         'div',
-        null,
+        { className: 'clock' },
         _react2.default.createElement(
-          'h1',
+          'p',
           null,
-          'Hello there!'
+          _react2.default.createElement(
+            'span',
+            null,
+            'Time: '
+          ),
+          _react2.default.createElement(
+            'span',
+            null,
+            hours + ':' + minutes + ':' + seconds + ' PDT'
+          )
         ),
         _react2.default.createElement(
-          'h1',
+          'p',
           null,
-          '' + this.state.time
+          _react2.default.createElement(
+            'span',
+            null,
+            'Date: '
+          ),
+          _react2.default.createElement(
+            'span',
+            null,
+            '' + dateString
+          )
         )
       );
     }
