@@ -37,6 +37,8 @@ class Clock extends React.Component {
     let dateString = this.state.time.toDateString();
 
     return(
+      <div>
+        <h1>Clock</h1>
         <div className="clock">
           <p>
             <span>Time: </span>
@@ -47,6 +49,7 @@ class Clock extends React.Component {
             <span>{`${dateString}`}</span>
           </p>
         </div>
+      </div>
     );
   }
 }

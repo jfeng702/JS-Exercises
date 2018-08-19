@@ -162,33 +162,42 @@ var Clock = function (_React$Component) {
 
       return _react2.default.createElement(
         'div',
-        { className: 'clock' },
+        null,
         _react2.default.createElement(
-          'p',
+          'h1',
           null,
-          _react2.default.createElement(
-            'span',
-            null,
-            'Time: '
-          ),
-          _react2.default.createElement(
-            'span',
-            null,
-            hours + ':' + minutes + ':' + seconds + ' PDT'
-          )
+          'Clock'
         ),
         _react2.default.createElement(
-          'p',
-          null,
+          'div',
+          { className: 'clock' },
           _react2.default.createElement(
-            'span',
+            'p',
             null,
-            'Date: '
+            _react2.default.createElement(
+              'span',
+              null,
+              'Time: '
+            ),
+            _react2.default.createElement(
+              'span',
+              null,
+              hours + ':' + minutes + ':' + seconds + ' PDT'
+            )
           ),
           _react2.default.createElement(
-            'span',
+            'p',
             null,
-            '' + dateString
+            _react2.default.createElement(
+              'span',
+              null,
+              'Date: '
+            ),
+            _react2.default.createElement(
+              'span',
+              null,
+              '' + dateString
+            )
           )
         )
       );
@@ -199,6 +208,112 @@ var Clock = function (_React$Component) {
 }(_react2.default.Component);
 
 exports.default = Clock;
+
+/***/ }),
+
+/***/ "./frontend/tabs.jsx":
+/*!***************************!*\
+  !*** ./frontend/tabs.jsx ***!
+  \***************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+
+var _react2 = _interopRequireDefault(_react);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var Headers = function Headers(props) {
+  var panes = props.panes.map(function (tab, id) {
+    var klass = id === props.selectedPane ? 'active' : '';
+    return _react2.default.createElement(
+      'h1',
+      {
+        onClick: props.selectHandler,
+        'data-value': id,
+        key: id,
+        className: klass
+      },
+      tab.title
+    );
+  });
+
+  return _react2.default.createElement(
+    'ul',
+    null,
+    panes
+  );
+};
+
+var Tabs = function (_React$Component) {
+  _inherits(Tabs, _React$Component);
+
+  function Tabs(props) {
+    _classCallCheck(this, Tabs);
+
+    var _this = _possibleConstructorReturn(this, (Tabs.__proto__ || Object.getPrototypeOf(Tabs)).call(this, props));
+
+    _this.state = {
+      selectedPane: 0
+    };
+
+    _this.selectHandler = _this.selectHandler.bind(_this);
+    return _this;
+  }
+
+  _createClass(Tabs, [{
+    key: 'selectHandler',
+    value: function selectHandler(e) {
+      var _this2 = this;
+
+      this.setState({
+        selectedPane: Number(e.target.dataset.value)
+      }, function () {
+        console.log(_this2.state);
+      });
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+      var panes = this.props.panes;
+
+      return _react2.default.createElement(
+        'div',
+        { className: 'tabs' },
+        _react2.default.createElement(Headers, {
+          panes: panes,
+          selectHandler: this.selectHandler,
+          selectedPane: this.state.selectedPane
+        }),
+        _react2.default.createElement(
+          'article',
+          { className: 'tab-content' },
+          panes[this.state.selectedPane].content
+        )
+      );
+    }
+  }]);
+
+  return Tabs;
+}(_react2.default.Component);
+
+exports.default = Tabs;
 
 /***/ }),
 
@@ -224,13 +339,19 @@ var _clock = __webpack_require__(/*! ./clock */ "./frontend/clock.jsx");
 
 var _clock2 = _interopRequireDefault(_clock);
 
+var _tabs = __webpack_require__(/*! ./tabs */ "./frontend/tabs.jsx");
+
+var _tabs2 = _interopRequireDefault(_tabs);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function Root() {
+  var panes = [{ title: 'one', content: 'first!' }, { title: 'two', content: 'second' }, { title: 'three', content: 'third' }];
   return _react2.default.createElement(
     'div',
     null,
-    _react2.default.createElement(_clock2.default, null)
+    _react2.default.createElement(_clock2.default, null),
+    _react2.default.createElement(_tabs2.default, { panes: panes })
   );
 }
 
