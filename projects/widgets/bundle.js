@@ -243,7 +243,7 @@ var Headers = function Headers(props) {
   var panes = props.panes.map(function (tab, id) {
     var klass = id === props.selectedPane ? 'active' : '';
     return _react2.default.createElement(
-      'h1',
+      'li',
       {
         onClick: props.selectHandler,
         'data-value': id,
@@ -256,7 +256,7 @@ var Headers = function Headers(props) {
 
   return _react2.default.createElement(
     'ul',
-    null,
+    { className: 'tab-ul' },
     panes
   );
 };

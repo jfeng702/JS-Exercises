@@ -4,19 +4,19 @@ const Headers = (props) => {
   let panes = props.panes.map((tab, id) => {
     const klass = id === props.selectedPane ? 'active' : '';
     return (
-      <h1
+      <li
         onClick={props.selectHandler}
         data-value={id}
         key={id}
         className={klass}
       >
         {tab.title}
-      </h1>
+      </li>
     );
   });
 
   return (
-    <ul>
+    <ul className="tab-ul">
       {panes}
     </ul>
   );

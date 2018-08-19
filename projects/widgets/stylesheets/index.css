@@ -1,5 +1,5 @@
 body {
-  font-family: 'Montserrat', sans-serif;
+  font-family: sans-serif;
 }
 
 .clock {
@@ -27,23 +27,23 @@ body {
 }
 
 
-.tabs h1 {
+.tabs li {
   border: 1px solid black;
   border-radius: 15px 15px 0 0;
   padding: 10px;
   flex: 1 0 auto;
   background-color: lightBlue;
 }
-.tabs h1:hover {
+
+.tabs li:hover {
   background-color: black;
   color: white;
 }
 
-.tabs .active {
+.tab-ul > .active {
   border-bottom: none;
   font-weight: 700;
 }
-
 
 .tabs ul {
   display: flex;
