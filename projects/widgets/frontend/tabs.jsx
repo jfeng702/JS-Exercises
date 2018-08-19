@@ -44,15 +44,18 @@ class Tabs extends React.Component {
   render() {
     const { panes } = this.props;
     return (
-      <div className="tabs">
-      <Headers
-        panes={panes}
-        selectHandler= {this.selectHandler}
-        selectedPane={this.state.selectedPane}
-      />
-      <article className="tab-content">
-        {panes[this.state.selectedPane].content}
-      </article>
+      <div>
+        <h1>Tabs</h1>
+        <div className="tabs">
+          <Headers
+            panes={panes}
+            selectHandler= {this.selectHandler}
+            selectedPane={this.state.selectedPane}
+            />
+          <article className="tab-content">
+            {panes[this.state.selectedPane].content}
+          </article>
+        </div>
       </div>
     );
   }

@@ -295,16 +295,25 @@ var Tabs = function (_React$Component) {
 
       return _react2.default.createElement(
         'div',
-        { className: 'tabs' },
-        _react2.default.createElement(Headers, {
-          panes: panes,
-          selectHandler: this.selectHandler,
-          selectedPane: this.state.selectedPane
-        }),
+        null,
         _react2.default.createElement(
-          'article',
-          { className: 'tab-content' },
-          panes[this.state.selectedPane].content
+          'h1',
+          null,
+          'Tabs'
+        ),
+        _react2.default.createElement(
+          'div',
+          { className: 'tabs' },
+          _react2.default.createElement(Headers, {
+            panes: panes,
+            selectHandler: this.selectHandler,
+            selectedPane: this.state.selectedPane
+          }),
+          _react2.default.createElement(
+            'article',
+            { className: 'tab-content' },
+            panes[this.state.selectedPane].content
+          )
         )
       );
     }
