@@ -326,6 +326,151 @@ exports.default = Tabs;
 
 /***/ }),
 
+/***/ "./frontend/weather.jsx":
+/*!******************************!*\
+  !*** ./frontend/weather.jsx ***!
+  \******************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+
+var _react2 = _interopRequireDefault(_react);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var toQueryString = function toQueryString(obj) {
+  var result = [];
+  for (var key in obj) {
+    if (obj.hasOwnProperty(key)) {
+      result.push(encodeURIComponent(key) + '=' + encodeURIComponent(obj[key]));
+    }
+  }
+  return result.join('&');
+};
+
+var Weather = function (_React$Component) {
+  _inherits(Weather, _React$Component);
+
+  function Weather(props) {
+    _classCallCheck(this, Weather);
+
+    var _this = _possibleConstructorReturn(this, (Weather.__proto__ || Object.getPrototypeOf(Weather)).call(this, props));
+
+    _this.state = {
+      weather: null
+    };
+    _this.pollWeather = _this.pollWeather.bind(_this);
+    return _this;
+  }
+
+  _createClass(Weather, [{
+    key: 'componentDidMount',
+    value: function componentDidMount() {
+
+      navigator.geolocation.getCurrentPosition(this.pollWeather);
+    }
+  }, {
+    key: 'pollWeather',
+    value: function pollWeather(position) {
+      var _this2 = this;
+
+      var url = 'https://api.openweathermap.org/data/2.5/weather?';
+      var params = {
+        lat: position.coords.latitude,
+        lon: position.coords.longitude
+      };
+      url += toQueryString(params);
+      var secret = 'e3b9f04f70d953126d696f8c881df61e';
+      url += '&APPID=' + secret;
+      url += '&units=imperial';
+
+      var request = new XMLHttpRequest();
+      request.onload = function () {
+        if (request.status >= 200 && request.status < 400) {
+          var data = JSON.parse(request.responseText);
+          console.log(data);
+          _this2.setState({
+            weather: data,
+            yo: 'WTF'
+          }, console.log(_this2.state));
+        }
+      };
+
+      request.open('GET', url, true);
+      request.send();
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+      // <h1>{this.state.weather.name}</h1>
+      // <h1>{this.state.weather.main.temp}</h1>
+      var content = _react2.default.createElement('div', null);
+
+      if (this.state.weather) {
+        var weather = this.state.weather;
+        var temp = weather.main.temp;
+        content = _react2.default.createElement(
+          'div',
+          null,
+          _react2.default.createElement(
+            'p',
+            null,
+            weather.name
+          ),
+          _react2.default.createElement(
+            'p',
+            null,
+            temp,
+            ' degrees'
+          )
+        );
+      } else {
+        content = _react2.default.createElement(
+          'div',
+          { className: 'loading' },
+          'loading weather...'
+        );
+      }
+      return _react2.default.createElement(
+        'div',
+        null,
+        _react2.default.createElement(
+          'h1',
+          null,
+          'Weather'
+        ),
+        _react2.default.createElement(
+          'div',
+          { className: 'weather' },
+          content
+        )
+      );
+    }
+  }]);
+
+  return Weather;
+}(_react2.default.Component);
+
+exports.default = Weather;
+
+/***/ }),
+
 /***/ "./frontend/widgets.jsx":
 /*!******************************!*\
   !*** ./frontend/widgets.jsx ***!
@@ -352,6 +497,10 @@ var _tabs = __webpack_require__(/*! ./tabs */ "./frontend/tabs.jsx");
 
 var _tabs2 = _interopRequireDefault(_tabs);
 
+var _weather = __webpack_require__(/*! ./weather */ "./frontend/weather.jsx");
+
+var _weather2 = _interopRequireDefault(_weather);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function Root() {
@@ -360,7 +509,8 @@ function Root() {
     'div',
     null,
     _react2.default.createElement(_clock2.default, null),
-    _react2.default.createElement(_tabs2.default, { panes: panes })
+    _react2.default.createElement(_tabs2.default, { panes: panes }),
+    _react2.default.createElement(_weather2.default, null)
   );
 }
 

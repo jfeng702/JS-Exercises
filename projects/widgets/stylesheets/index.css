@@ -11,6 +11,7 @@ body {
   font-size: 28px;
   border: 1px solid black;
   margin-left: 10px;
+  margin-bottom: 10px;
 }
 
 .clock p {
@@ -24,6 +25,7 @@ body {
   width: 200px;
   height: 200px;
   margin: 10px;
+  margin-bottom: 50px;
 }
 
 
@@ -33,6 +35,7 @@ body {
   padding: 10px;
   flex: 1 0 auto;
   background-color: lightBlue;
+
 }
 
 .tabs li:hover {
@@ -59,4 +62,28 @@ body {
   justify-content: center;
   align-items: center;
 
+}
+
+.weather {
+  margin: 20px;
+  text-align: center;
+
+  width: 350px;
+  height: 80px;
+  background-color: lightGreen;
+  padding: 10px;
+  border: 1px solid black;
+}
+
+.weather p {
+  margin: 12px;
+}
+
+.loading {
+  margin-top: 25px;
+}
+
+body {
+  display: flex;
+  justify-content: space-around;
 }

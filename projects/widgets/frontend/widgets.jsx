@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import Clock from './clock';
 import Tabs from './tabs';
+import Weather from './weather';
 
 function Root() {
   let panes = [
@@ -12,6 +13,7 @@ function Root() {
     <div>
       <Clock />
       <Tabs panes={panes}/>
+      <Weather />
     </div>
   );
 }
