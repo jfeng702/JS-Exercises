@@ -12,7 +12,14 @@ function Root() {
     {title: 'three', content: 'third'}];
 
   let names = [
-    'Joey', 'James', 'John'
+    'Abba',
+    'Barney',
+    'Barbara',
+    'Jeff',
+    'Jenny',
+    'Sarah',
+    'Sally',
+    'Xander'
   ];
 
   return (

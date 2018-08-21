@@ -53,8 +53,6 @@ class Weather extends React.Component {
   }
 
   render() {
-    // <h1>{this.state.weather.name}</h1>
-    // <h1>{this.state.weather.main.temp}</h1>
     let content = <div></div>;
 
     if (this.state.weather) {
