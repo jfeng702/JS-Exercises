@@ -87,3 +87,7 @@ body {
   display: flex;
   justify-content: space-around;
 }
+
+.auto input {
+  border: 1px solid black;
+}
