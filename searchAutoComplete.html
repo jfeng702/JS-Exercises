@@ -35,12 +35,12 @@
           const key = args[0];
           if (cache.has(key)) {
               console.log('cache hit');
+              console.log(cache.get(key));
               return cache.get(key);
           }
           console.log('cache miss');
           const val = func.apply(this, arguments);
           cache.set(key, val);
-          console.log(cache);
           return val;
       };
   }
@@ -77,19 +77,21 @@
 
   function showSearchResults(searchQuery) {
       const regex = new RegExp(searchQuery, 'gi');
+      let html;
       searchData(searchQuery).then(results => {
-          const html = results.map(movie => {
+          html = results.map(movie => {
               const title = movie.title.replace(regex, `<span class="query-highlight">${searchQuery}</span>`);
               return `
-    <li>
-      <span class="title">${title}</span>
-      <span class="rating">${movie.rating}</span>
-    </li>
-  `;
+                <li>
+                  <span class="title">${title}</span>
+                  <span class="rating">${movie.rating}</span>
+                </li>
+              `;
           });
 
           resultsElement.innerHTML = html.join('');
       });
+      return resultsElement.innerHTML;
   }
 
 
