@@ -10,20 +10,33 @@
 //   return climbingStairs(n, start + 1) + climbingStairs(n, start + 2);
 // };
 
-const climbingStairs = (n, start = 0, memo = {}) => {
+// const climbingStairs = (n, start = 0, memo = {}) => {
+//
+//   if (start === n) {
+//     return 1;
+//   }
+//   if (start > n) {
+//     return 0;
+//   }
+//   if (memo[start]) {
+//     return memo[start];
+//   }
+//
+//   memo[start] = climbingStairs(n, start + 1, memo) + climbingStairs(n, start + 2, memo);
+//   return memo[start];
+// };
 
-  if (start === n) {
+const climbingStairs = (n) => {
+  if (n === 1) {
     return 1;
   }
-  if (start > n) {
-    return 0;
+  const dp = [];
+  dp[1] = 1;
+  dp[2] = 2;
+  for (let i = 3; i <= n; i++) {
+    dp[i] = dp[i - 1] + dp[i - 2];
   }
-  if (memo[start]) {
-    return memo[start];
-  }
-
-  memo[start] = climbingStairs(n, start + 1, memo) + climbingStairs(n, start + 2, memo);
-  return memo[start];
+  return dp[n];
 };
 
 console.log(climbingStairs(1));
