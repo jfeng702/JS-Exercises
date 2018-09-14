@@ -67,7 +67,44 @@ class DynamicProgramming
   end
 
   def super_frog_hops(n, k)
+    # n = num_stairs
+    # k = max_stairs
+    # try max_stairs (k) = 4
 
+    # @frog_cache = {
+    #   0 => [[]],
+    #
+    #   1 => [[1]],
+    #
+    #   2 => [[1,1]],
+    #
+    #   2 => [[1,1], [2]],
+    #
+    #   3 => [[1,1,1]],
+    #
+    #   3 => [[1,2], [2,1], [1,1,1]],
+    #
+    #   3 => [[1,2], [2,1], [3], [1,1,1]]
+    # }
+
+    @frog_cache = {
+      0 => [[]],
+      1 => [[1]]
+    }
+
+    return @frog_cache[n] if @frog_cache[n]
+
+    (2..n).each do |step|
+      new_way = []
+      (1..k).each do |el|
+        break if step - el < 0
+        @frog_cache[step-el].each do |el2|
+          new_way << (el2.dup << el)
+        end
+      end
+      @frog_cache[step] = new_way
+    end
+    @frog_cache[n]
   end
 
   def knapsack(weights, values, capacity)
